@@ -1,0 +1,10 @@
+import capos.*
+
+describe "Parte 1 Rolando"{
+    test "Rolando recolecta artefactos"{
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.recolectarArtefacto(libroDeHechizos)
+        assert.throwsException({rolando.recolectarArtefacto(collarDivino)})
+        assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactosObtenidos())
+    }
+}
