@@ -1,0 +1,66 @@
+import capos.*
+
+describe "Rolando parte 1.1 y 1.2"{
+    method initialize(){
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.recolectarArtefacto(libroDeHechizos)
+    }
+
+    test "Rolando recolecta artefactos"{
+        assert.throwsException({rolando.recolectarArtefacto(collarDivino)})
+        assert.equals([espadaDelDestino, libroDeHechizos], rolando.artefactosObtenidos())
+    }
+
+    test "Rolando llega al castillo"{
+        rolando.llegarAlCastillo()
+        rolando.recolectarArtefacto(collarDivino)
+        rolando.llegarAlCastillo()
+        assert.equals([espadaDelDestino, libroDeHechizos, collarDivino], castilloDePiedra.artefactosAlmacenados())
+        assert.equals([], rolando.artefactosObtenidos())
+    }
+}
+
+describe "Rolando parte 1.3 y 1.4"{
+    test "Las posesiones totales de Rolando"{
+        rolando.recolectarArtefacto(collarDivino)
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.llegarAlCastillo()
+        rolando.recolectarArtefacto(armaduraDeAceroValyrio)
+        assert.equals([collarDivino, espadaDelDestino, armaduraDeAceroValyrio], rolando.todasLasPosesiones())
+        assert.notThat(rolando.tieneEsteArtefacto(libroDeHechizos))
+    }
+
+    test "Historial de los encuentros"{
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.recolectarArtefacto(libroDeHechizos)
+        assert.throwsException({rolando.recolectarArtefacto(collarDivino)})
+        rolando.llegarAlCastillo()
+        rolando.recolectarArtefacto(armaduraDeAceroValyrio)
+        rolando.recolectarArtefacto(collarDivino)
+        assert.equals([espadaDelDestino, libroDeHechizos, collarDivino, armaduraDeAceroValyrio, collarDivino], rolando.historial())
+    }
+}
+
+describe "Rolando parte 2.1"{
+    test "Batalla"{
+        rolando.tamañoMochila(3)
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.recolectarArtefacto(armaduraDeAceroValyrio)
+        rolando.recolectarArtefacto(collarDivino)
+        rolando.batalla()
+        assert.equals(6, rolando.poderBase())
+        assert.equals(3, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(3, collarDivino.poderQueAporta(rolando))
+        rolando.batalla()
+        assert.equals(7, rolando.poderBase())
+        assert.equals(3.5, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(5, collarDivino.poderQueAporta(rolando))
+        rolando.batalla()
+        assert.equals(8, rolando.poderBase())
+        assert.equals(4, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(6, collarDivino.poderQueAporta(rolando))
+    }
+}
