@@ -5,17 +5,18 @@ describe "Rolando parte 1.1 y 1.2"{
         rolando.recolectarArtefacto(espadaDelDestino)
         rolando.recolectarArtefacto(libroDeHechizos)
     }
+
     test "Rolando recolecta artefactos"{
         assert.throwsException({rolando.recolectarArtefacto(collarDivino)})
-        assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactosObtenidos())
+        assert.equals([espadaDelDestino, libroDeHechizos], rolando.artefactosObtenidos())
     }
 
     test "Rolando llega al castillo"{
         rolando.llegarAlCastillo()
         rolando.recolectarArtefacto(collarDivino)
         rolando.llegarAlCastillo()
-        assert.equals([espadaDelDestino, libroDeHechizos, collarDivino], castillo)
-        assert.equals(#{}, rolando.artefactosObtenidos())
+        assert.equals([espadaDelDestino, libroDeHechizos, collarDivino], castilloDePiedra.artefactosAlmacenados())
+        assert.equals([], rolando.artefactosObtenidos())
     }
 }
 
@@ -41,5 +42,25 @@ describe "Rolando parte 1.3 y 1.4"{
 }
 
 describe "Rolando parte 2.1"{
-
+    test "Batalla"{
+        rolando.tamañoMochila(3)
+        rolando.recolectarArtefacto(espadaDelDestino)
+        rolando.recolectarArtefacto(armaduraDeAceroValyrio)
+        rolando.recolectarArtefacto(collarDivino)
+        rolando.batalla()
+        assert.equals(6, rolando.poderBase())
+        assert.equals(3, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(3, collarDivino.poderQueAporta(rolando))
+        rolando.batalla()
+        assert.equals(7, rolando.poderBase())
+        assert.equals(3.5, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(5, collarDivino.poderQueAporta(rolando))
+        rolando.batalla()
+        assert.equals(8, rolando.poderBase())
+        assert.equals(4, espadaDelDestino.poderQueAporta(rolando))
+        assert.equals(6, armaduraDeAceroValyrio.poderQueAporta(rolando))
+        assert.equals(6, collarDivino.poderQueAporta(rolando))
+    }
 }

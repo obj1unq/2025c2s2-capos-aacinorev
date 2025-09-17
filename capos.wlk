@@ -3,10 +3,19 @@ object rolando {
     const historial = []
     var property tamañoMochila = 2
     var property hogarActual = castilloDePiedra
-    const poderBase = 5
+    var poderBase = 5
 
     method poderBase(){
         return poderBase
+    }
+
+    method poderDePelea(){
+        return poderBase + mochila.sum{artefacto => artefacto.poderQueAporta(self)}
+    }
+
+    method batalla(){
+        mochila.forEach({artefacto => artefacto.utilizar()})  /// Utiliza todos los artefaectos
+        poderBase += 1
     }
 
     method recolectarArtefacto(artefacto){
@@ -42,12 +51,12 @@ object rolando {
         return (self.todasLasPosesiones()).contains(artefacto)
     }
 
-    method utilizar(artefacto){
+    /*method utilizar(artefacto){
 
-    }
+    }*/
 }
 
-object castilloDePiedra {
+object castilloDePiedra{
     const artefactosAlmacenados = []
 
     method artefactosAlmacenados(){
@@ -65,15 +74,14 @@ object castilloDePiedra {
 
 
 object espadaDelDestino{
-    var fueUtilizada = false
+   var vecesUtilizado = 0
 
-    method fueUtilizada(){
-        return fueUtilizada
+    method utilizar(){
+        vecesUtilizado += 1
     }
 
     method poderQueAporta(personaje){
-        if (!self.fueUtilizada()){
-            fueUtilizada = true
+        if (vecesUtilizado == 0){
             return personaje.poderBase()
         }
         else{
@@ -87,9 +95,28 @@ object libroDeHechizos{
 }
 
 object collarDivino{
+    var vecesUtilizado = 0
+    const poderBase = 3
+
+    method utilizar(){
+        vecesUtilizado += 1
+    }
     
+    method poderQueAporta(personaje){
+        if(personaje.poderBase() <= 6){
+            return poderBase
+        }
+        else{
+            return poderBase + vecesUtilizado
+        }
+    }
 }
 
 object armaduraDeAceroValyrio{
-
+    method poderQueAporta(personaje){
+        return 6
+    }
+    
+    method utilizar(){
+    }
 }
